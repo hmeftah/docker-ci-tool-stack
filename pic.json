@@ -1,0 +1,2687 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "pic",
+        "creationTimestamp": null
+    },
+    "objects": [
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "5ZPLUa05zg-y3cvE0X4M"
+                        }
+                    },
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "sUvL9h2_oU9RNEABOTC-"
+                        }
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {}
+                    }
+                ],
+                "runPolicy": "Serial",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "jenkins"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "jenkins:from"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "jenkins:latest"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null
+            },
+            "status": {
+                "lastVersion": 0
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "U8UESfDY8hc2w_Pnrqoo"
+                        }
+                    },
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "GLeWyyuKRkshS4LfDmgE"
+                        }
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {}
+                    }
+                ],
+                "runPolicy": "Serial",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "nexus"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "nexus:from"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "nexus:latest"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null
+            },
+            "status": {
+                "lastVersion": 0
+            }
+        },
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "GitHub",
+                        "github": {
+                            "secret": "MANdAYKm-ysU4KTy3Uw4"
+                        }
+                    },
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "p0LS-73TeXBUaZHMyamk"
+                        }
+                    },
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {}
+                    }
+                ],
+                "runPolicy": "Serial",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "sonar"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "sonar:from"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "sonar:latest"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null
+            },
+            "status": {
+                "lastVersion": 0
+            }
+        },
+        {
+            "kind": "Build",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins-1",
+                "creationTimestamp": null,
+                "labels": {
+                    "buildconfig": "jenkins",
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/build-config.name": "jenkins",
+                    "openshift.io/build.start-policy": "Serial"
+                },
+                "annotations": {
+                    "openshift.io/build-config.name": "jenkins",
+                    "openshift.io/build.number": "1",
+                    "openshift.io/build.pod-name": "jenkins-1-build"
+                }
+            },
+            "spec": {
+                "serviceAccount": "builder",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "jenkins"
+                },
+                "revision": {
+                    "type": "Git",
+                    "git": {
+                        "commit": "1960de1e9884d33f204f6fedd5ef859ad461804f",
+                        "author": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "committer": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "message": "added link to sample conference app docker container"
+                    }
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "jenkins@sha256:5f595257805db3cb49f74fa3b6b2948134800d0bbe5a1c87e56e0573c8c3ba29"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "jenkins:latest"
+                    },
+                    "pushSecret": {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null,
+                "triggeredBy": [
+                    {
+                        "message": "Image change",
+                        "imageChangeBuild": {
+                            "imageID": "jenkins@sha256:5f595257805db3cb49f74fa3b6b2948134800d0bbe5a1c87e56e0573c8c3ba29",
+                            "fromRef": {
+                                "kind": "ImageStreamTag",
+                                "name": "jenkins:from"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "New",
+                "outputDockerImageReference": "172.30.53.244:5000/pic/jenkins:latest",
+                "config": {
+                    "name": "jenkins"
+                }
+            }
+        },
+        {
+            "kind": "Build",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus-1",
+                "creationTimestamp": null,
+                "labels": {
+                    "buildconfig": "nexus",
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/build-config.name": "nexus",
+                    "openshift.io/build.start-policy": "Serial"
+                },
+                "annotations": {
+                    "openshift.io/build-config.name": "nexus",
+                    "openshift.io/build.number": "1",
+                    "openshift.io/build.pod-name": "nexus-1-build"
+                }
+            },
+            "spec": {
+                "serviceAccount": "builder",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "nexus"
+                },
+                "revision": {
+                    "type": "Git",
+                    "git": {
+                        "commit": "1960de1e9884d33f204f6fedd5ef859ad461804f",
+                        "author": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "committer": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "message": "added link to sample conference app docker container"
+                    }
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "nexus:latest"
+                    },
+                    "pushSecret": {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null,
+                "triggeredBy": [
+                    {
+                        "message": "Image change",
+                        "imageChangeBuild": {
+                            "imageID": "centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799",
+                            "fromRef": {
+                                "kind": "ImageStreamTag",
+                                "name": "nexus:from"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "New",
+                "outputDockerImageReference": "172.30.53.244:5000/pic/nexus:latest",
+                "config": {
+                    "name": "nexus"
+                }
+            }
+        },
+        {
+            "kind": "Build",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar-1",
+                "creationTimestamp": null,
+                "labels": {
+                    "buildconfig": "sonar",
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/build-config.name": "sonar",
+                    "openshift.io/build.start-policy": "Serial"
+                },
+                "annotations": {
+                    "openshift.io/build-config.name": "sonar",
+                    "openshift.io/build.number": "1",
+                    "openshift.io/build.pod-name": "sonar-1-build"
+                }
+            },
+            "spec": {
+                "serviceAccount": "builder",
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/hmeftah/docker-ci-tool-stack.git",
+                        "ref": "master"
+                    },
+                    "contextDir": "sonar"
+                },
+                "revision": {
+                    "type": "Git",
+                    "git": {
+                        "commit": "1960de1e9884d33f204f6fedd5ef859ad461804f",
+                        "author": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "committer": {
+                            "name": "Marcel Birkner",
+                            "email": "marcel_birkner-extern@gothaer-systems.de"
+                        },
+                        "message": "added link to sample conference app docker container"
+                    }
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "sonar:latest"
+                    },
+                    "pushSecret": {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                },
+                "resources": {},
+                "postCommit": {},
+                "nodeSelector": null,
+                "triggeredBy": [
+                    {
+                        "message": "Image change",
+                        "imageChangeBuild": {
+                            "imageID": "centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799",
+                            "fromRef": {
+                                "kind": "ImageStreamTag",
+                                "name": "sonar:from"
+                            }
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "phase": "New",
+                "outputDockerImageReference": "172.30.53.244:5000/pic/sonar:latest",
+                "config": {
+                    "name": "sonar"
+                }
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "gitlab",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2017-01-05T12:09:59Z"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "8.14.4-ce.0",
+                        "annotations": {
+                            "openshift.io/imported-from": "gitlab/gitlab-ce:8.14.4-ce.0"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/gitlab:8.14.4-ce.0"
+                        },
+                        "generation": 2,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2017-01-05T12:09:56Z"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "from",
+                        "annotations": {
+                            "openshift.io/imported-from": "jenkins:2.19.4"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/jenkins:from"
+                        },
+                        "generation": 2,
+                        "importPolicy": {}
+                    },
+                    {
+                        "name": "latest",
+                        "annotations": null,
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/jenkins:latest"
+                        },
+                        "generation": null,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2017-01-05T12:09:57Z"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "from",
+                        "annotations": {
+                            "openshift.io/imported-from": "centos:7"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/nexus:from"
+                        },
+                        "generation": 2,
+                        "importPolicy": {}
+                    },
+                    {
+                        "name": "latest",
+                        "annotations": null,
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/nexus:latest"
+                        },
+                        "generation": null,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2017-01-05T12:09:58Z"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "from",
+                        "annotations": {
+                            "openshift.io/imported-from": "centos:7"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/sonar:from"
+                        },
+                        "generation": 2,
+                        "importPolicy": {}
+                    },
+                    {
+                        "name": "latest",
+                        "annotations": null,
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/sonar:latest"
+                        },
+                        "generation": null,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonardb",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2017-01-05T12:10:00Z"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "latest",
+                        "annotations": {
+                            "openshift.io/imported-from": "postgres"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "172.30.53.244:5000/pic/sonardb:latest"
+                        },
+                        "generation": 2,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "gitlab",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "gitlab"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "pic",
+                                "name": "gitlab:8.14.4-ce.0"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "gitlab"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "gitlab"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-2",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-3",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "gitlab",
+                                "image": "gitlab/gitlab-ce@sha256:db1a373b81589b7f1a8a723b405d6b1e7bea7d74581820e0aa143c80e5003f02",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 443,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 22,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "GITLAB_OMNIBUS_CONFIG",
+                                        "value": "# external_url 'https://gitlab.example.com'\n# Add any other gitlab.rb configuration here, each on its own line\n"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/etc/gitlab"
+                                    },
+                                    {
+                                        "name": "dir-2",
+                                        "mountPath": "/var/log/gitlab"
+                                    },
+                                    {
+                                        "name": "dir-3",
+                                        "mountPath": "/var/opt/gitlab"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "jenkins"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "pic",
+                                "name": "jenkins:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "jenkins"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "jenkins"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-2",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-3",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "jenkins",
+                                "image": "172.30.53.244:5000/pic/jenkins@sha256:60e1f215aaff71b4dcafa9d35f46610836be551ffde05a73253026b02345bd13",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "NEXUS_PORT",
+                                        "value": "8081"
+                                    },
+                                    {
+                                        "name": "SONAR_DB_PORT",
+                                        "value": "5432"
+                                    },
+                                    {
+                                        "name": "SONAR_PORT",
+                                        "value": "9000"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/var/run/docker.sock"
+                                    },
+                                    {
+                                        "name": "dir-2",
+                                        "mountPath": "/usr/bin/docker"
+                                    },
+                                    {
+                                        "name": "dir-3",
+                                        "mountPath": "/var/lib/jenkins/"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "nexus"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "pic",
+                                "name": "nexus:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "nexus"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "nexus"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "nexus",
+                                "image": "172.30.53.244:5000/pic/nexus@sha256:95490086eefa30a2c91e2ac2d072fa8beb2ead477e3a900d45c802e3da064524",
+                                "ports": [
+                                    {
+                                        "containerPort": 8081,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "sonar"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "pic",
+                                "name": "sonar:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "sonar"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "sonar"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "sonar",
+                                "image": "172.30.53.244:5000/pic/sonar@sha256:d68eaac8b7c0af719d582cb50625e939ce0832aed82e0a50517e5dc5d00a8f7d",
+                                "ports": [
+                                    {
+                                        "containerPort": 9000,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 5432,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "SONARQUBE_JDBC_PASSWORD",
+                                        "value": "sonar"
+                                    },
+                                    {
+                                        "name": "SONARQUBE_JDBC_URL",
+                                        "value": "jdbc:postgresql://sonardb:5432/sonar"
+                                    },
+                                    {
+                                        "name": "SONARQUBE_JDBC_USERNAME",
+                                        "value": "sonar"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonardb",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "sonardb"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "pic",
+                                "name": "sonardb:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "sonardb"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deploymentconfig": "sonardb"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "sonardb",
+                                "image": "postgres@sha256:855b55b060bfa63cb39bfee0fe4ec6f40037e9f85f8a7eec24bc8e59ec1a8345",
+                                "env": [
+                                    {
+                                        "name": "POSTGRES_PASSWORD",
+                                        "value": "sonar"
+                                    },
+                                    {
+                                        "name": "POSTGRES_USER",
+                                        "value": "sonar"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/var/lib/postgresql/data"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {}
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "gitlab-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/deployment-config.name": "gitlab"
+                },
+                "annotations": {
+                    "openshift.io/deployer-pod.name": "gitlab-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "gitlab",
+                    "openshift.io/deployment.phase": "Complete",
+                    "openshift.io/deployment.replicas": "1",
+                    "openshift.io/deployment.status-reason": "caused by an image change",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"gitlab\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/deploymentconfigs/gitlab\",\"uid\":\"de51b4e0-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132351\",\"generation\":2,\"creationTimestamp\":\"2017-01-05T12:09:54Z\",\"labels\":{\"compose\":\"docker-ci-tool-stack\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"gitlab\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"gitlab:8.14.4-ce.0\"},\"lastTriggeredImage\":\"gitlab/gitlab-ce@sha256:db1a373b81589b7f1a8a723b405d6b1e7bea7d74581820e0aa143c80e5003f02\"}}],\"replicas\":1,\"test\":false,\"selector\":{\"deploymentconfig\":\"gitlab\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"deploymentconfig\":\"gitlab\"}},\"spec\":{\"volumes\":[{\"name\":\"dir-1\",\"emptyDir\":{}},{\"name\":\"dir-2\",\"emptyDir\":{}},{\"name\":\"dir-3\",\"emptyDir\":{}}],\"containers\":[{\"name\":\"gitlab\",\"image\":\"gitlab/gitlab-ce@sha256:db1a373b81589b7f1a8a723b405d6b1e7bea7d74581820e0aa143c80e5003f02\",\"ports\":[{\"containerPort\":80,\"protocol\":\"TCP\"},{\"containerPort\":443,\"protocol\":\"TCP\"},{\"containerPort\":22,\"protocol\":\"TCP\"}],\"env\":[{\"name\":\"GITLAB_OMNIBUS_CONFIG\",\"value\":\"# external_url 'https://gitlab.example.com'\\n# Add any other gitlab.rb configuration here, each on its own line\\n\"}],\"resources\":{},\"volumeMounts\":[{\"name\":\"dir-1\",\"mountPath\":\"/etc/gitlab\"},{\"name\":\"dir-2\",\"mountPath\":\"/var/log/gitlab\"},{\"name\":\"dir-3\",\"mountPath\":\"/var/opt/gitlab\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"IfNotPresent\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":1,\"details\":{\"message\":\"caused by an image change\",\"causes\":[{\"type\":\"ImageChange\",\"imageTrigger\":{\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"gitlab:8.14.4-ce.0\"}}}]}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "deployment": "gitlab-1",
+                    "deploymentconfig": "gitlab"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deployment": "gitlab-1",
+                            "deploymentconfig": "gitlab"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "gitlab",
+                            "openshift.io/deployment.name": "gitlab-1"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-2",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-3",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "gitlab",
+                                "image": "gitlab/gitlab-ce@sha256:db1a373b81589b7f1a8a723b405d6b1e7bea7d74581820e0aa143c80e5003f02",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 443,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 22,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "GITLAB_OMNIBUS_CONFIG",
+                                        "value": "# external_url 'https://gitlab.example.com'\n# Add any other gitlab.rb configuration here, each on its own line\n"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/etc/gitlab"
+                                    },
+                                    {
+                                        "name": "dir-2",
+                                        "mountPath": "/var/log/gitlab"
+                                    },
+                                    {
+                                        "name": "dir-3",
+                                        "mountPath": "/var/opt/gitlab"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/deployment-config.name": "jenkins"
+                },
+                "annotations": {
+                    "kubectl.kubernetes.io/desired-replicas": "1",
+                    "openshift.io/deployer-pod.name": "jenkins-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "jenkins",
+                    "openshift.io/deployment.phase": "Failed",
+                    "openshift.io/deployment.replicas": "0",
+                    "openshift.io/deployment.status-reason": "caused by an image change",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"jenkins\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/deploymentconfigs/jenkins\",\"uid\":\"de5374a2-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132692\",\"generation\":2,\"creationTimestamp\":\"2017-01-05T12:09:54Z\",\"labels\":{\"compose\":\"docker-ci-tool-stack\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"jenkins\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"jenkins:latest\"},\"lastTriggeredImage\":\"172.30.53.244:5000/pic/jenkins@sha256:60e1f215aaff71b4dcafa9d35f46610836be551ffde05a73253026b02345bd13\"}}],\"replicas\":1,\"test\":false,\"selector\":{\"deploymentconfig\":\"jenkins\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"deploymentconfig\":\"jenkins\"}},\"spec\":{\"volumes\":[{\"name\":\"dir-1\",\"emptyDir\":{}},{\"name\":\"dir-2\",\"emptyDir\":{}},{\"name\":\"dir-3\",\"emptyDir\":{}}],\"containers\":[{\"name\":\"jenkins\",\"image\":\"172.30.53.244:5000/pic/jenkins@sha256:60e1f215aaff71b4dcafa9d35f46610836be551ffde05a73253026b02345bd13\",\"ports\":[{\"containerPort\":8080,\"protocol\":\"TCP\"}],\"env\":[{\"name\":\"NEXUS_PORT\",\"value\":\"8081\"},{\"name\":\"SONAR_DB_PORT\",\"value\":\"5432\"},{\"name\":\"SONAR_PORT\",\"value\":\"9000\"}],\"resources\":{},\"volumeMounts\":[{\"name\":\"dir-1\",\"mountPath\":\"/var/run/docker.sock\"},{\"name\":\"dir-2\",\"mountPath\":\"/usr/bin/docker\"},{\"name\":\"dir-3\",\"mountPath\":\"/var/lib/jenkins/\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":2,\"details\":{\"message\":\"caused by an image change\",\"causes\":[{\"type\":\"ImageChange\",\"imageTrigger\":{\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"jenkins:latest\"}}}]}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 0,
+                "selector": {
+                    "deployment": "jenkins-1",
+                    "deploymentconfig": "jenkins"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deployment": "jenkins-1",
+                            "deploymentconfig": "jenkins"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "jenkins",
+                            "openshift.io/deployment.name": "jenkins-1"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-2",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "dir-3",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "jenkins",
+                                "image": "172.30.53.244:5000/pic/jenkins@sha256:60e1f215aaff71b4dcafa9d35f46610836be551ffde05a73253026b02345bd13",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "NEXUS_PORT",
+                                        "value": "8081"
+                                    },
+                                    {
+                                        "name": "SONAR_DB_PORT",
+                                        "value": "5432"
+                                    },
+                                    {
+                                        "name": "SONAR_PORT",
+                                        "value": "9000"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/var/run/docker.sock"
+                                    },
+                                    {
+                                        "name": "dir-2",
+                                        "mountPath": "/usr/bin/docker"
+                                    },
+                                    {
+                                        "name": "dir-3",
+                                        "mountPath": "/var/lib/jenkins/"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/deployment-config.name": "nexus"
+                },
+                "annotations": {
+                    "openshift.io/deployer-pod.name": "nexus-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "nexus",
+                    "openshift.io/deployment.phase": "Complete",
+                    "openshift.io/deployment.replicas": "1",
+                    "openshift.io/deployment.status-reason": "caused by an image change",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"nexus\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/deploymentconfigs/nexus\",\"uid\":\"de5515df-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132548\",\"generation\":2,\"creationTimestamp\":\"2017-01-05T12:09:54Z\",\"labels\":{\"compose\":\"docker-ci-tool-stack\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"nexus\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"nexus:latest\"},\"lastTriggeredImage\":\"172.30.53.244:5000/pic/nexus@sha256:95490086eefa30a2c91e2ac2d072fa8beb2ead477e3a900d45c802e3da064524\"}}],\"replicas\":1,\"test\":false,\"selector\":{\"deploymentconfig\":\"nexus\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"deploymentconfig\":\"nexus\"}},\"spec\":{\"containers\":[{\"name\":\"nexus\",\"image\":\"172.30.53.244:5000/pic/nexus@sha256:95490086eefa30a2c91e2ac2d072fa8beb2ead477e3a900d45c802e3da064524\",\"ports\":[{\"containerPort\":8081,\"protocol\":\"TCP\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":2,\"details\":{\"message\":\"caused by an image change\",\"causes\":[{\"type\":\"ImageChange\",\"imageTrigger\":{\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"nexus:latest\"}}}]}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "deployment": "nexus-1",
+                    "deploymentconfig": "nexus"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deployment": "nexus-1",
+                            "deploymentconfig": "nexus"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "nexus",
+                            "openshift.io/deployment.name": "nexus-1"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "nexus",
+                                "image": "172.30.53.244:5000/pic/nexus@sha256:95490086eefa30a2c91e2ac2d072fa8beb2ead477e3a900d45c802e3da064524",
+                                "ports": [
+                                    {
+                                        "containerPort": 8081,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/deployment-config.name": "sonar"
+                },
+                "annotations": {
+                    "openshift.io/deployer-pod.name": "sonar-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "sonar",
+                    "openshift.io/deployment.phase": "Complete",
+                    "openshift.io/deployment.replicas": "1",
+                    "openshift.io/deployment.status-reason": "caused by an image change",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"sonar\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/deploymentconfigs/sonar\",\"uid\":\"de6a7863-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132602\",\"generation\":2,\"creationTimestamp\":\"2017-01-05T12:09:54Z\",\"labels\":{\"compose\":\"docker-ci-tool-stack\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"sonar\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"sonar:latest\"},\"lastTriggeredImage\":\"172.30.53.244:5000/pic/sonar@sha256:d68eaac8b7c0af719d582cb50625e939ce0832aed82e0a50517e5dc5d00a8f7d\"}}],\"replicas\":1,\"test\":false,\"selector\":{\"deploymentconfig\":\"sonar\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"deploymentconfig\":\"sonar\"}},\"spec\":{\"containers\":[{\"name\":\"sonar\",\"image\":\"172.30.53.244:5000/pic/sonar@sha256:d68eaac8b7c0af719d582cb50625e939ce0832aed82e0a50517e5dc5d00a8f7d\",\"ports\":[{\"containerPort\":9000,\"protocol\":\"TCP\"},{\"containerPort\":5432,\"protocol\":\"TCP\"}],\"env\":[{\"name\":\"SONARQUBE_JDBC_PASSWORD\",\"value\":\"sonar\"},{\"name\":\"SONARQUBE_JDBC_URL\",\"value\":\"jdbc:postgresql://sonardb:5432/sonar\"},{\"name\":\"SONARQUBE_JDBC_USERNAME\",\"value\":\"sonar\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":1,\"details\":{\"message\":\"caused by an image change\",\"causes\":[{\"type\":\"ImageChange\",\"imageTrigger\":{\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"sonar:latest\"}}}]}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "deployment": "sonar-1",
+                    "deploymentconfig": "sonar"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deployment": "sonar-1",
+                            "deploymentconfig": "sonar"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "sonar",
+                            "openshift.io/deployment.name": "sonar-1"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "sonar",
+                                "image": "172.30.53.244:5000/pic/sonar@sha256:d68eaac8b7c0af719d582cb50625e939ce0832aed82e0a50517e5dc5d00a8f7d",
+                                "ports": [
+                                    {
+                                        "containerPort": 9000,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 5432,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "SONARQUBE_JDBC_PASSWORD",
+                                        "value": "sonar"
+                                    },
+                                    {
+                                        "name": "SONARQUBE_JDBC_URL",
+                                        "value": "jdbc:postgresql://sonardb:5432/sonar"
+                                    },
+                                    {
+                                        "name": "SONARQUBE_JDBC_USERNAME",
+                                        "value": "sonar"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonardb-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack",
+                    "openshift.io/deployment-config.name": "sonardb"
+                },
+                "annotations": {
+                    "openshift.io/deployer-pod.name": "sonardb-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "sonardb",
+                    "openshift.io/deployment.phase": "Complete",
+                    "openshift.io/deployment.replicas": "1",
+                    "openshift.io/deployment.status-reason": "caused by an image change",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"sonardb\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/deploymentconfigs/sonardb\",\"uid\":\"dea68fe0-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132366\",\"generation\":2,\"creationTimestamp\":\"2017-01-05T12:09:55Z\",\"labels\":{\"compose\":\"docker-ci-tool-stack\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"sonardb\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"sonardb:latest\"},\"lastTriggeredImage\":\"postgres@sha256:855b55b060bfa63cb39bfee0fe4ec6f40037e9f85f8a7eec24bc8e59ec1a8345\"}}],\"replicas\":1,\"test\":false,\"selector\":{\"deploymentconfig\":\"sonardb\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"deploymentconfig\":\"sonardb\"}},\"spec\":{\"volumes\":[{\"name\":\"dir-1\",\"emptyDir\":{}}],\"containers\":[{\"name\":\"sonardb\",\"image\":\"postgres@sha256:855b55b060bfa63cb39bfee0fe4ec6f40037e9f85f8a7eec24bc8e59ec1a8345\",\"env\":[{\"name\":\"POSTGRES_PASSWORD\",\"value\":\"sonar\"},{\"name\":\"POSTGRES_USER\",\"value\":\"sonar\"}],\"resources\":{},\"volumeMounts\":[{\"name\":\"dir-1\",\"mountPath\":\"/var/lib/postgresql/data\"}],\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":1,\"details\":{\"message\":\"caused by an image change\",\"causes\":[{\"type\":\"ImageChange\",\"imageTrigger\":{\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"pic\",\"name\":\"sonardb:latest\"}}}]}}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "deployment": "sonardb-1",
+                    "deploymentconfig": "sonardb"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "deployment": "sonardb-1",
+                            "deploymentconfig": "sonardb"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "sonardb",
+                            "openshift.io/deployment.name": "sonardb-1"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "dir-1",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "sonardb",
+                                "image": "postgres@sha256:855b55b060bfa63cb39bfee0fe4ec6f40037e9f85f8a7eec24bc8e59ec1a8345",
+                                "env": [
+                                    {
+                                        "name": "POSTGRES_PASSWORD",
+                                        "value": "sonar"
+                                    },
+                                    {
+                                        "name": "POSTGRES_USER",
+                                        "value": "sonar"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "dir-1",
+                                        "mountPath": "/var/lib/postgresql/data"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "gitlab",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/host.generated": "true"
+                }
+            },
+            "spec": {
+                "host": "gitlab-pic.apps.10.2.2.2.xip.io",
+                "to": {
+                    "kind": "Service",
+                    "name": "gitlab",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "80-tcp"
+                },
+                "wildcardPolicy": "None"
+            },
+            "status": {
+                "ingress": [
+                    {
+                        "host": "gitlab-pic.apps.10.2.2.2.xip.io",
+                        "routerName": "router",
+                        "conditions": [
+                            {
+                                "type": "Admitted",
+                                "status": "True",
+                                "lastTransitionTime": "2017-01-05T12:33:42Z"
+                            }
+                        ],
+                        "wildcardPolicy": "None"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                },
+                "annotations": {
+                    "openshift.io/host.generated": "true"
+                }
+            },
+            "spec": {
+                "host": "nexus-pic.apps.10.2.2.2.xip.io",
+                "to": {
+                    "kind": "Service",
+                    "name": "nexus",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "8081-tcp"
+                },
+                "wildcardPolicy": "None"
+            },
+            "status": {
+                "ingress": [
+                    {
+                        "host": "nexus-pic.apps.10.2.2.2.xip.io",
+                        "routerName": "router",
+                        "conditions": [
+                            {
+                                "type": "Admitted",
+                                "status": "True",
+                                "lastTransitionTime": "2017-01-05T12:33:00Z"
+                            }
+                        ],
+                        "wildcardPolicy": "None"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "gitlab",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "22-tcp",
+                        "protocol": "TCP",
+                        "port": 22,
+                        "targetPort": 22
+                    },
+                    {
+                        "name": "80-tcp",
+                        "protocol": "TCP",
+                        "port": 80,
+                        "targetPort": 80
+                    },
+                    {
+                        "name": "443-tcp",
+                        "protocol": "TCP",
+                        "port": 443,
+                        "targetPort": 443
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "gitlab"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "8080-tcp",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "jenkins"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "8081-tcp",
+                        "protocol": "TCP",
+                        "port": 8081,
+                        "targetPort": 8081
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "nexus"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar",
+                "creationTimestamp": null,
+                "labels": {
+                    "compose": "docker-ci-tool-stack"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "5432-tcp",
+                        "protocol": "TCP",
+                        "port": 5432,
+                        "targetPort": 5432
+                    },
+                    {
+                        "name": "9000-tcp",
+                        "protocol": "TCP",
+                        "port": 9000,
+                        "targetPort": 9000
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "sonar"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "gitlab-1-",
+                "creationTimestamp": null,
+                "labels": {
+                    "deployment": "gitlab-1",
+                    "deploymentconfig": "gitlab"
+                },
+                "annotations": {
+                    "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"pic\",\"name\":\"gitlab-1\",\"uid\":\"e14370a8-d33f-11e6-b2ab-525400c583ad\",\"apiVersion\":\"v1\",\"resourceVersion\":\"132388\"}}\n",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "gitlab",
+                    "openshift.io/deployment.name": "gitlab-1",
+                    "openshift.io/scc": "anyuid"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "dir-1",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "dir-2",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "dir-3",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "default-token-rd5qg",
+                        "secret": {
+                            "secretName": "default-token-rd5qg",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "gitlab",
+                        "image": "gitlab/gitlab-ce@sha256:db1a373b81589b7f1a8a723b405d6b1e7bea7d74581820e0aa143c80e5003f02",
+                        "ports": [
+                            {
+                                "containerPort": 80,
+                                "protocol": "TCP"
+                            },
+                            {
+                                "containerPort": 443,
+                                "protocol": "TCP"
+                            },
+                            {
+                                "containerPort": 22,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "GITLAB_OMNIBUS_CONFIG",
+                                "value": "# external_url 'https://gitlab.example.com'\n# Add any other gitlab.rb configuration here, each on its own line\n"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "dir-1",
+                                "mountPath": "/etc/gitlab"
+                            },
+                            {
+                                "name": "dir-2",
+                                "mountPath": "/var/log/gitlab"
+                            },
+                            {
+                                "name": "dir-3",
+                                "mountPath": "/var/opt/gitlab"
+                            },
+                            {
+                                "name": "default-token-rd5qg",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "MKNOD",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c11,c5"
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "default",
+                "serviceAccount": "default",
+                "nodeName": "origin",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c11,c5"
+                    }
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "default-dockercfg-5ov1f"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins-1-build",
+                "creationTimestamp": null,
+                "labels": {
+                    "openshift.io/build.name": "jenkins-1"
+                },
+                "annotations": {
+                    "openshift.io/build.name": "jenkins-1",
+                    "openshift.io/scc": "privileged"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "docker-socket",
+                        "hostPath": {
+                            "path": "/var/run/docker.sock"
+                        }
+                    },
+                    {
+                        "name": "builder-dockercfg-wpvtc-push",
+                        "secret": {
+                            "secretName": "builder-dockercfg-wpvtc",
+                            "defaultMode": 420
+                        }
+                    },
+                    {
+                        "name": "builder-token-3eynt",
+                        "secret": {
+                            "secretName": "builder-token-3eynt",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "docker-build",
+                        "image": "openshift/origin-docker-builder:v1.3.0",
+                        "args": [
+                            "--loglevel=0"
+                        ],
+                        "env": [
+                            {
+                                "name": "BUILD",
+                                "value": "{\"kind\":\"Build\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"jenkins-1\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/builds/jenkins-1\",\"uid\":\"df8907f7-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132323\",\"creationTimestamp\":\"2017-01-05T12:09:56Z\",\"labels\":{\"buildconfig\":\"jenkins\",\"compose\":\"docker-ci-tool-stack\",\"openshift.io/build-config.name\":\"jenkins\",\"openshift.io/build.start-policy\":\"Serial\"},\"annotations\":{\"openshift.io/build-config.name\":\"jenkins\",\"openshift.io/build.number\":\"1\"}},\"spec\":{\"serviceAccount\":\"builder\",\"source\":{\"type\":\"Git\",\"git\":{\"uri\":\"https://github.com/hmeftah/docker-ci-tool-stack.git\",\"ref\":\"master\"},\"contextDir\":\"jenkins\"},\"strategy\":{\"type\":\"Docker\",\"dockerStrategy\":{\"from\":{\"kind\":\"DockerImage\",\"name\":\"jenkins@sha256:5f595257805db3cb49f74fa3b6b2948134800d0bbe5a1c87e56e0573c8c3ba29\"}}},\"output\":{\"to\":{\"kind\":\"DockerImage\",\"name\":\"172.30.53.244:5000/pic/jenkins:latest\"},\"pushSecret\":{\"name\":\"builder-dockercfg-wpvtc\"}},\"resources\":{},\"postCommit\":{},\"triggeredBy\":[{\"message\":\"Image change\",\"imageChangeBuild\":{\"imageID\":\"jenkins@sha256:5f595257805db3cb49f74fa3b6b2948134800d0bbe5a1c87e56e0573c8c3ba29\",\"fromRef\":{\"kind\":\"ImageStreamTag\",\"name\":\"jenkins:from\"}}}]},\"status\":{\"phase\":\"New\",\"outputDockerImageReference\":\"172.30.53.244:5000/pic/jenkins:latest\",\"config\":{\"kind\":\"BuildConfig\",\"namespace\":\"pic\",\"name\":\"jenkins\"}}}\n"
+                            },
+                            {
+                                "name": "SOURCE_REPOSITORY",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_URI",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_CONTEXT_DIR",
+                                "value": "jenkins"
+                            },
+                            {
+                                "name": "SOURCE_REF",
+                                "value": "master"
+                            },
+                            {
+                                "name": "ORIGIN_VERSION",
+                                "value": "v1.3.0"
+                            },
+                            {
+                                "name": "PUSH_DOCKERCFG_PATH",
+                                "value": "/var/run/secrets/openshift.io/push"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "docker-socket",
+                                "mountPath": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "builder-dockercfg-wpvtc-push",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/openshift.io/push"
+                            },
+                            {
+                                "name": "builder-token-3eynt",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        }
+                    }
+                ],
+                "restartPolicy": "Never",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "builder",
+                "serviceAccount": "builder",
+                "nodeName": "origin",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "jenkins-1-deploy",
+                "creationTimestamp": null,
+                "labels": {
+                    "openshift.io/deployer-pod-for.name": "jenkins-1"
+                },
+                "annotations": {
+                    "openshift.io/deployment.name": "jenkins-1",
+                    "openshift.io/scc": "anyuid"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "deployer-token-qixql",
+                        "secret": {
+                            "secretName": "deployer-token-qixql",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "deployment",
+                        "image": "openshift/origin-deployer:v1.3.0",
+                        "env": [
+                            {
+                                "name": "KUBERNETES_MASTER",
+                                "value": "https://10.2.2.2:8443"
+                            },
+                            {
+                                "name": "OPENSHIFT_MASTER",
+                                "value": "https://10.2.2.2:8443"
+                            },
+                            {
+                                "name": "BEARER_TOKEN_FILE",
+                                "value": "/var/run/secrets/kubernetes.io/serviceaccount/token"
+                            },
+                            {
+                                "name": "OPENSHIFT_CA_DATA",
+                                "value": "-----BEGIN CERTIFICATE-----\nMIIC6jCCAdKgAwIBAgIBATANBgkqhkiG9w0BAQsFADAmMSQwIgYDVQQDDBtvcGVu\nc2hpZnQtc2lnbmVyQDE0NzQ2NTU0NTgwHhcNMTYwOTIzMTgzMDU4WhcNMjEwOTIy\nMTgzMDU5WjAmMSQwIgYDVQQDDBtvcGVuc2hpZnQtc2lnbmVyQDE0NzQ2NTU0NTgw\nggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC4yN0Il7QZ7TxxspDf+Rom\nifQZYjZGOp/neAyNUDCLYQ//QjX4EQglXvgbJidlCYGqZPb2dIvZUNMwKd1xB/tY\n74Ae65jo2J5F2vKmozk6H05GrhfemV0XWPWzjkoJ6aMV8mPlroobeUoDnkb66joT\nSuXjgTQfcNSN/FrEpK1hAI1WpspTF6pFtI7fff/5wu6dT0xVgSQtzaZsOEJQfbEo\nS619LSEv+Jpi51zptUB0C0uKxeaJ3WhEqE2nVmXA0Doy/XLDmAP1dof+L49D4ARH\nIxOy9b1j8UjQ8TqJx79c9DKRxz3jTBB+rG43h4P8UtAOHUyqZEDx1zZmfsze7DTv\nAgMBAAGjIzAhMA4GA1UdDwEB/wQEAwICpDAPBgNVHRMBAf8EBTADAQH/MA0GCSqG\nSIb3DQEBCwUAA4IBAQBKlUltfHDtoblllF2UwWookUSNy6/9D+RAxo75kL8Ne07i\nynLia6WSLSZq2NaHawKaIb6Mht/58PHB3a+VICt9kmoukRT5WWf/sjGBdQwlMSQM\nlNhKeMbzrKRNvmCwwNX6Dy+aWaVvFVHd38NXIs2v2727ej3zREfqKMpiFvWwKXG3\nvT+wDH7FF7UfzOLJGeXV9IR6fNCC5SO8DPpEGllad61h3Nosc17LcCK0gwWMUcrg\nuAUN0sOvrMq4dM3bMHaEZm012RO5hn1nC2b6ESGHJOBAahZ+XMBklsIpOJ66RxP5\nBiBqeyEvjl6bArWcakxGt7bj5FSj1hw1Jm0TiJUM\n-----END CERTIFICATE-----\n"
+                            },
+                            {
+                                "name": "OPENSHIFT_DEPLOYMENT_NAME",
+                                "value": "jenkins-1"
+                            },
+                            {
+                                "name": "OPENSHIFT_DEPLOYMENT_NAMESPACE",
+                                "value": "pic"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "deployer-token-qixql",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "MKNOD",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c11,c5"
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Never",
+                "terminationGracePeriodSeconds": 10,
+                "activeDeadlineSeconds": 21600,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "deployer",
+                "serviceAccount": "deployer",
+                "nodeName": "origin",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c11,c5"
+                    }
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "deployer-dockercfg-t3ajs"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus-1-build",
+                "creationTimestamp": null,
+                "labels": {
+                    "openshift.io/build.name": "nexus-1"
+                },
+                "annotations": {
+                    "openshift.io/build.name": "nexus-1",
+                    "openshift.io/scc": "privileged"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "docker-socket",
+                        "hostPath": {
+                            "path": "/var/run/docker.sock"
+                        }
+                    },
+                    {
+                        "name": "builder-dockercfg-wpvtc-push",
+                        "secret": {
+                            "secretName": "builder-dockercfg-wpvtc",
+                            "defaultMode": 420
+                        }
+                    },
+                    {
+                        "name": "builder-token-3eynt",
+                        "secret": {
+                            "secretName": "builder-token-3eynt",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "docker-build",
+                        "image": "openshift/origin-docker-builder:v1.3.0",
+                        "args": [
+                            "--loglevel=0"
+                        ],
+                        "env": [
+                            {
+                                "name": "BUILD",
+                                "value": "{\"kind\":\"Build\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"nexus-1\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/builds/nexus-1\",\"uid\":\"e01cd713-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132332\",\"creationTimestamp\":\"2017-01-05T12:09:57Z\",\"labels\":{\"buildconfig\":\"nexus\",\"compose\":\"docker-ci-tool-stack\",\"openshift.io/build-config.name\":\"nexus\",\"openshift.io/build.start-policy\":\"Serial\"},\"annotations\":{\"openshift.io/build-config.name\":\"nexus\",\"openshift.io/build.number\":\"1\"}},\"spec\":{\"serviceAccount\":\"builder\",\"source\":{\"type\":\"Git\",\"git\":{\"uri\":\"https://github.com/hmeftah/docker-ci-tool-stack.git\",\"ref\":\"master\"},\"contextDir\":\"nexus\"},\"strategy\":{\"type\":\"Docker\",\"dockerStrategy\":{\"from\":{\"kind\":\"DockerImage\",\"name\":\"centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799\"}}},\"output\":{\"to\":{\"kind\":\"DockerImage\",\"name\":\"172.30.53.244:5000/pic/nexus:latest\"},\"pushSecret\":{\"name\":\"builder-dockercfg-wpvtc\"}},\"resources\":{},\"postCommit\":{},\"triggeredBy\":[{\"message\":\"Image change\",\"imageChangeBuild\":{\"imageID\":\"centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799\",\"fromRef\":{\"kind\":\"ImageStreamTag\",\"name\":\"nexus:from\"}}}]},\"status\":{\"phase\":\"New\",\"outputDockerImageReference\":\"172.30.53.244:5000/pic/nexus:latest\",\"config\":{\"kind\":\"BuildConfig\",\"namespace\":\"pic\",\"name\":\"nexus\"}}}\n"
+                            },
+                            {
+                                "name": "SOURCE_REPOSITORY",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_URI",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_CONTEXT_DIR",
+                                "value": "nexus"
+                            },
+                            {
+                                "name": "SOURCE_REF",
+                                "value": "master"
+                            },
+                            {
+                                "name": "ORIGIN_VERSION",
+                                "value": "v1.3.0"
+                            },
+                            {
+                                "name": "PUSH_DOCKERCFG_PATH",
+                                "value": "/var/run/secrets/openshift.io/push"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "docker-socket",
+                                "mountPath": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "builder-dockercfg-wpvtc-push",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/openshift.io/push"
+                            },
+                            {
+                                "name": "builder-token-3eynt",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        }
+                    }
+                ],
+                "restartPolicy": "Never",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "builder",
+                "serviceAccount": "builder",
+                "nodeName": "origin",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "nexus-1-",
+                "creationTimestamp": null,
+                "labels": {
+                    "deployment": "nexus-1",
+                    "deploymentconfig": "nexus"
+                },
+                "annotations": {
+                    "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"pic\",\"name\":\"nexus-1\",\"uid\":\"049506f7-d341-11e6-b2ab-525400c583ad\",\"apiVersion\":\"v1\",\"resourceVersion\":\"132564\"}}\n",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "nexus",
+                    "openshift.io/deployment.name": "nexus-1",
+                    "openshift.io/scc": "anyuid"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "default-token-rd5qg",
+                        "secret": {
+                            "secretName": "default-token-rd5qg",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "nexus",
+                        "image": "172.30.53.244:5000/pic/nexus@sha256:95490086eefa30a2c91e2ac2d072fa8beb2ead477e3a900d45c802e3da064524",
+                        "ports": [
+                            {
+                                "containerPort": 8081,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "default-token-rd5qg",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "MKNOD",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c11,c5"
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "default",
+                "serviceAccount": "default",
+                "nodeName": "origin",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c11,c5"
+                    }
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "default-dockercfg-5ov1f"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonar-1-build",
+                "creationTimestamp": null,
+                "labels": {
+                    "openshift.io/build.name": "sonar-1"
+                },
+                "annotations": {
+                    "openshift.io/build.name": "sonar-1",
+                    "openshift.io/scc": "privileged"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "docker-socket",
+                        "hostPath": {
+                            "path": "/var/run/docker.sock"
+                        }
+                    },
+                    {
+                        "name": "builder-dockercfg-wpvtc-push",
+                        "secret": {
+                            "secretName": "builder-dockercfg-wpvtc",
+                            "defaultMode": 420
+                        }
+                    },
+                    {
+                        "name": "builder-token-3eynt",
+                        "secret": {
+                            "secretName": "builder-token-3eynt",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "docker-build",
+                        "image": "openshift/origin-docker-builder:v1.3.0",
+                        "args": [
+                            "--loglevel=0"
+                        ],
+                        "env": [
+                            {
+                                "name": "BUILD",
+                                "value": "{\"kind\":\"Build\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"sonar-1\",\"namespace\":\"pic\",\"selfLink\":\"/oapi/v1/namespaces/pic/builds/sonar-1\",\"uid\":\"e0a9fdd6-d33f-11e6-b2ab-525400c583ad\",\"resourceVersion\":\"132341\",\"creationTimestamp\":\"2017-01-05T12:09:58Z\",\"labels\":{\"buildconfig\":\"sonar\",\"compose\":\"docker-ci-tool-stack\",\"openshift.io/build-config.name\":\"sonar\",\"openshift.io/build.start-policy\":\"Serial\"},\"annotations\":{\"openshift.io/build-config.name\":\"sonar\",\"openshift.io/build.number\":\"1\"}},\"spec\":{\"serviceAccount\":\"builder\",\"source\":{\"type\":\"Git\",\"git\":{\"uri\":\"https://github.com/hmeftah/docker-ci-tool-stack.git\",\"ref\":\"master\"},\"contextDir\":\"sonar\"},\"strategy\":{\"type\":\"Docker\",\"dockerStrategy\":{\"from\":{\"kind\":\"DockerImage\",\"name\":\"centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799\"}}},\"output\":{\"to\":{\"kind\":\"DockerImage\",\"name\":\"172.30.53.244:5000/pic/sonar:latest\"},\"pushSecret\":{\"name\":\"builder-dockercfg-wpvtc\"}},\"resources\":{},\"postCommit\":{},\"triggeredBy\":[{\"message\":\"Image change\",\"imageChangeBuild\":{\"imageID\":\"centos@sha256:c577af3197aacedf79c5a204cd7f493c8e07ffbce7f88f7600bf19c688c38799\",\"fromRef\":{\"kind\":\"ImageStreamTag\",\"name\":\"sonar:from\"}}}]},\"status\":{\"phase\":\"New\",\"outputDockerImageReference\":\"172.30.53.244:5000/pic/sonar:latest\",\"config\":{\"kind\":\"BuildConfig\",\"namespace\":\"pic\",\"name\":\"sonar\"}}}\n"
+                            },
+                            {
+                                "name": "SOURCE_REPOSITORY",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_URI",
+                                "value": "https://github.com/hmeftah/docker-ci-tool-stack.git"
+                            },
+                            {
+                                "name": "SOURCE_CONTEXT_DIR",
+                                "value": "sonar"
+                            },
+                            {
+                                "name": "SOURCE_REF",
+                                "value": "master"
+                            },
+                            {
+                                "name": "ORIGIN_VERSION",
+                                "value": "v1.3.0"
+                            },
+                            {
+                                "name": "PUSH_DOCKERCFG_PATH",
+                                "value": "/var/run/secrets/openshift.io/push"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "docker-socket",
+                                "mountPath": "/var/run/docker.sock"
+                            },
+                            {
+                                "name": "builder-dockercfg-wpvtc-push",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/openshift.io/push"
+                            },
+                            {
+                                "name": "builder-token-3eynt",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        }
+                    }
+                ],
+                "restartPolicy": "Never",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "builder",
+                "serviceAccount": "builder",
+                "nodeName": "origin",
+                "securityContext": {},
+                "imagePullSecrets": [
+                    {
+                        "name": "builder-dockercfg-wpvtc"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "sonar-1-",
+                "creationTimestamp": null,
+                "labels": {
+                    "deployment": "sonar-1",
+                    "deploymentconfig": "sonar"
+                },
+                "annotations": {
+                    "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"pic\",\"name\":\"sonar-1\",\"uid\":\"2f12d1ef-d341-11e6-b2ab-525400c583ad\",\"apiVersion\":\"v1\",\"resourceVersion\":\"132621\"}}\n",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "sonar",
+                    "openshift.io/deployment.name": "sonar-1",
+                    "openshift.io/scc": "anyuid"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "default-token-rd5qg",
+                        "secret": {
+                            "secretName": "default-token-rd5qg",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "sonar",
+                        "image": "172.30.53.244:5000/pic/sonar@sha256:d68eaac8b7c0af719d582cb50625e939ce0832aed82e0a50517e5dc5d00a8f7d",
+                        "ports": [
+                            {
+                                "containerPort": 9000,
+                                "protocol": "TCP"
+                            },
+                            {
+                                "containerPort": 5432,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "SONARQUBE_JDBC_PASSWORD",
+                                "value": "sonar"
+                            },
+                            {
+                                "name": "SONARQUBE_JDBC_URL",
+                                "value": "jdbc:postgresql://sonardb:5432/sonar"
+                            },
+                            {
+                                "name": "SONARQUBE_JDBC_USERNAME",
+                                "value": "sonar"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "default-token-rd5qg",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "MKNOD",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c11,c5"
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "default",
+                "serviceAccount": "default",
+                "nodeName": "origin",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c11,c5"
+                    }
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "default-dockercfg-5ov1f"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "sonardb-1-",
+                "creationTimestamp": null,
+                "labels": {
+                    "deployment": "sonardb-1",
+                    "deploymentconfig": "sonardb"
+                },
+                "annotations": {
+                    "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"pic\",\"name\":\"sonardb-1\",\"uid\":\"e1e4708c-d33f-11e6-b2ab-525400c583ad\",\"apiVersion\":\"v1\",\"resourceVersion\":\"132412\"}}\n",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "sonardb",
+                    "openshift.io/deployment.name": "sonardb-1",
+                    "openshift.io/scc": "anyuid"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "dir-1",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "default-token-rd5qg",
+                        "secret": {
+                            "secretName": "default-token-rd5qg",
+                            "defaultMode": 420
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "sonardb",
+                        "image": "postgres@sha256:855b55b060bfa63cb39bfee0fe4ec6f40037e9f85f8a7eec24bc8e59ec1a8345",
+                        "env": [
+                            {
+                                "name": "POSTGRES_PASSWORD",
+                                "value": "sonar"
+                            },
+                            {
+                                "name": "POSTGRES_USER",
+                                "value": "sonar"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "dir-1",
+                                "mountPath": "/var/lib/postgresql/data"
+                            },
+                            {
+                                "name": "default-token-rd5qg",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "MKNOD",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c11,c5"
+                            }
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "serviceAccountName": "default",
+                "serviceAccount": "default",
+                "nodeName": "origin",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c11,c5"
+                    }
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "default-dockercfg-5ov1f"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        }
+    ]
+}
